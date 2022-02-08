@@ -16,22 +16,15 @@ public class Employee {
     this.name = name;
     this.title = title;
     this.hourlyWage = hourlyWage;
-
-    int[] hoursCopy = new int[hours.length];
-
-    for (int i = 0; i < Math.min(hours.length, days); ++i)
-      hoursCopy[i] = hours[i];
-    dayIndex = hours.length - 1;
-
-    this.hours = hoursCopy;
+    this.setHours(hours);
   }
 
   public String getName() {
-    return name;
+    return this.name;
   }
 
   public String getTitle() {
-    return title;
+    return this.title;
   }
 
   public void setTitle(String title) {
@@ -39,7 +32,7 @@ public class Employee {
   }
 
   public double getHourlyWage() {
-    return hourlyWage;
+    return this.hourlyWage;
   }
 
   public void setHourlyWage(double hourlyWage) {
@@ -47,27 +40,44 @@ public class Employee {
   }
 
   public int getDayIndex() {
-    return dayIndex;
+    return this.dayIndex;
   }
 
   public int[] getHours() {
-    return hours;
+    return this.hours;
+  }
+
+  public int getHours(int idx) {
+    return this.hours[idx % this.days];
+  }
+
+  public void setHours(int[] hours) {
+    for (int i = 0; i < hours.length; ++i)
+      this.hours[i % days] = hours[i];
+    for (int j = hours.length; j < days; ++j)
+      this.hours[j % days] = 0;
+    this.dayIndex = hours.length;
   }
 
   public void newDay(int hours) {
-    this.hours[dayIndex % days] = hours;
-    dayIndex++;
+    this.hours[dayIndex] = hours;
+
+    if (++dayIndex > days) {
+      dayIndex = 0;
+      int[] zeroedHours = new int[days];
+      this.setHours(zeroedHours);
+    }
   }
 
   public double calculateSalary() {
     double total = 0;
     for (int i = 0; i < days; ++i)
-      total += hours[i] * hourlyWage;
+      total += this.hours[i] * hourlyWage;
 
     return total;
   }
 
   public String toString() {
-    return name + " " + title + " $" + calculateSalary();
+    return name + "(" + this.dayIndex + "), " + title.toUpperCase() + ": " + calculateSalary() + "€";
   }
 }

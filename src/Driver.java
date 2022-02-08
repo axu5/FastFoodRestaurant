@@ -8,8 +8,9 @@
  */
 public class Driver {
   public static void main(String[] _args) {
-    Employee axu = new Employee("aleksanteri aho", "CTO", 120.0);
-    Employee frank = new Employee("frank", "developer", 40.0, new int[] { 8, 8, 8, 8, 8, 8, 8 });
+    Employee axu = new Employee("Axu", "CTO", 120.0);
+    Employee frank = new Employee("Frank", "developer", 10.0, new int[] { 8, 8, 8, 8, 8, 8, 8 });
+    Employee eren = new Employee("Eren", "designer", 10.0, new int[] { 4, 4, 4, 4, 4 });
 
     System.out.println(axu);
     System.out.println(frank);
@@ -17,9 +18,11 @@ public class Driver {
     axu.newDay(10);
     axu.newDay(10);
 
-    frank.newDay(8);
+    eren.newDay(4);
+    eren.newDay(4);
 
     System.out.println(axu);
     System.out.println(frank);
+    System.out.println(eren);
   }
 }
